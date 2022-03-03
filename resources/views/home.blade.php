@@ -29,7 +29,7 @@
                                     var serverTimezone = 'utc'; 
                                     var momentJsTimeObj = moment.tz(updated_at, serverTimezone); 
                                     var localTimeZone = jstz.determine(); 
-                                    var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('ll'); 
+                                    var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('lll'); 
                                     $('#span-{{$featuredPost->id}}').text('Posted: ' + localTime);
                                 </script>
                             @elseif($featuredPost->created_at != $featuredPost->updated_at)
@@ -39,7 +39,7 @@
                                 var serverTimezone = 'utc'; 
                                 var momentJsTimeObj = moment.tz(updated_at, serverTimezone); 
                                 var localTimeZone = jstz.determine(); 
-                                var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('ll'); 
+                                var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('lll'); 
                                 $('#span-{{$featuredPost->id}}').text('Updated: ' + localTime);
                             </script>
                             @endif
@@ -51,7 +51,7 @@
                             @method('DELETE')
                             <button class="float-right pl-2 ml-2 btn btn-danger btn-sm px-3">Delete</button>
                         </form>
-                        <a href="#" class="pl-2 edit btn edit btn-sm px-3 float-right">Edit</a>
+                        <a href="/edit/{{$featuredPost->id}}" class="pl-2 edit btn edit btn-sm px-3 float-right">Edit</a>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                                     var serverTimezone = 'utc'; 
                                     var momentJsTimeObj = moment.tz(updated_at, serverTimezone); 
                                     var localTimeZone = jstz.determine(); 
-                                    var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('ll'); 
+                                    var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('lll'); 
                                     $('#span-{{$post->id}}').text('Posted: ' + localTime);
                                 </script>
                             @elseif($post->created_at != $post->updated_at)
@@ -82,7 +82,7 @@
                                 var serverTimezone = 'utc'; 
                                 var momentJsTimeObj = moment.tz(updated_at, serverTimezone); 
                                 var localTimeZone = jstz.determine(); 
-                                var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('ll'); 
+                                var localTime = momentJsTimeObj.clone().tz(localTimeZone.name()).format('lll'); 
                                 $('#span-{{$post->id}}').text('Updated: ' + localTime);
                             </script>
                             @endif
@@ -94,7 +94,9 @@
                             @method('DELETE')
                             <button class="float-right pl-2 ml-2 btn btn-danger btn-sm px-3">Delete</button>
                         </form>
-                        <a href="#" class="pl-2 btn btn-sm edit float-right px-3">Edit</a>
+                        
+                        <a href="/edit/{{$post->id}}" class="pl-2 btn btn-sm edit float-right px-3">Edit</a>
+
                     </div>
                 </div>
             </div>
