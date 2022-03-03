@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// 
+// 
+// define pagination constants to easily change them
+// 
+// 
+
+define('categoriesNumberPerPage', 5);
+define('tagsNumberPerPage', 5);
+
 
 
 Auth::routes(['verify' => true]);
@@ -23,8 +32,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/publish', [App\Http\Controllers\PostController::class, 'publish'])->name('publish')->middleware(['auth']);
 Route::post('/store', [App\Http\Controllers\PostController::class, 'store']);
 Route::post('/store-tag', [App\Http\Controllers\PostController::class, 'storeNewTag']);
-Route::get('/fetch-all-tags', [App\Http\Controllers\PostController::class, 'getAllTags']);
-Route::get('/fetch-all-categories', [App\Http\Controllers\PostController::class, 'getAllCategories']);
+Route::get('/autocomplete-tags', [App\Http\Controllers\PostController::class, 'autoCompleteTags']);
+Route::get('/autocomplete-categories', [App\Http\Controllers\PostController::class, 'autoCompleteCategories']);
 Route::get('/post/{slug}', [App\Http\Controllers\PostController::class, 'showPost'])->middleware('auth');
 Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy'])->middleware('auth');
 

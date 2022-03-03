@@ -16,14 +16,63 @@ class PostController extends Controller
 {
     public function publish()
     {
-        $categories = DB::table('cats')->select('id', 'cat_name')->get();
-        return view('publish', ['cats' => $categories]);
+        return view('publish');
     }
 
-    public function getAllTags()
+    public function autoCompleteCategories(Request $request)
     {
-        $tags = Tag::select('id', 'tag_name')->get();
-        return response()->json(['tags' => $tags]);
+        if($request->ajax())
+        {
+            $more = true;
+            $term = $request->term;
+            $categories = Cat::select('id', 'cat_name as text')
+            ->orderBy('cat_name', 'ASC')
+            ->where('cat_name', 'LIKE', '%' . $term . '%')->paginate(categoriesNumberPerPage);
+            if(empty($categories->nextPageUrl()))
+            {
+                $more = false;
+            }
+            $results = $categories->items();
+
+            // set the response object or assocciative array as select2 plugin requires
+
+            $response = [
+                'results' => $results,
+                'pagination' => [
+                    'more' => $more
+                ]
+            ];
+
+            return response()->json($response);
+        }
+    }
+
+    public function autoCompleteTags(Request $request)
+    {
+        if($request->ajax())
+        {
+            $more = true;
+            $term = $request->term;
+            $tags = Tag::select('id', 'tag_name as text')
+            ->orderBy('tag_name', 'ASC')
+            ->where('tag_name', 'LIKE', '%' . $term . '%')->paginate(tagsNumberPerPage);
+            if(empty($tags->nextPageUrl()))
+            {
+                $more = false;
+            }
+            $results = $tags->items();
+
+            // set the response object or assocciative array as select2 plugin requires
+
+            $response = [
+                'results' => $results,
+                'pagination' => [
+                    'more' => $more
+                ]
+            ];
+
+            return response()->json($response);
+        }
     }
 
     public function destroy($id)
@@ -34,21 +83,19 @@ class PostController extends Controller
     }
 
 
-    public function getAllCategories()
-    {
-        $categories = Cat::select('id', 'cat_name')->get();
-        return response()->json(['categories' => $categories]);
-    }
-
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|max:100|min:5',
             'summernote' => 'required',
-            'postImage' => 'required|image|mimes:jpeg,png,jpg,svg|max:3500',
+            'postImage' => 'required|image|mimes:jpeg,png,jpg,svg',
             'categories' => "required|array|min:1|max:3",
+            'categories.*' => "required|distinct|string",
             'tags' => "required|array|min:3|max:10",
-        ], ['postImage.max' => 'Image size have not to be more than 3.5MBs']);
+            'tags.*' => "required|distinct|string",
+        ], [
+            'categories.required' => 'You have to select 1 category at least',
+        ]);
 
         // pick the post from the request after validation
         $title = $request->input('title');
@@ -73,10 +120,15 @@ class PostController extends Controller
             $data = base64_decode($data);
             list(, $type) = explode(':', $type);
             list(, $type) = explode('/', $type); 
-            $image_path = "public/contentImages/" . time() . $key . '.' . $type;
-            Storage::disk('local')->put($image_path, $data);
+            $image_name = "/storage/contentImages/" . time(). $key . '.' . $type;
+            $path = public_path() . $image_name;
+            if(!is_dir(public_path().'/storage/contentImages'))
+            {
+                mkdir(public_path().'/storage/contentImages');
+            }
+            file_put_contents($path, $data);
             $img->removeAttribute('src');
-            $img->setAttribute('src', $image_path);
+            $img->setAttribute('src', $image_name);
 
         }
         $summernote = $dom->saveHTML();
@@ -100,17 +152,18 @@ class PostController extends Controller
         $request->validate([
             'tag' => 'regex:/^[a-z.0-9-]{1,20}$/|unique:tags,tag_name'
         ], [
-            'tag.unique' => 'This tag is already existing in the tags select box', 
+            'tag.unique' => 'This tag is already existing just select it!', 
              'tag.regex' => 'Please, enter a valid tag<br>
              Tag should only contain lowercase letters, digits and dot character<br>
-             Enter at least 1 character and at most 15 characters'
+             Enter at least 1 character and at most 15 characters!'
             ]);
+        $tag = new Tag(['tag_name' => $request->input('tag')]);
+        $tag->save();
 
-        $latestRecord = Tag::create(['tag_name' => $request->input('tag')]);
-        return response()->json(['id' => $latestRecord->id, 'tag_name' => $latestRecord->tag_name]);
+        return response()->json(['msg' => 'Tag added successfully search it in select box']);
 
     }
-
+    
     public function showPost($slug)
     {
         $post = Post::select('title', 'post_body', 'created_at')->where('slug', $slug)->get();

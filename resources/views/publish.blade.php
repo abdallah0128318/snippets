@@ -6,7 +6,7 @@
     <form method='POST' action="" id='postForm'>
         @CSRF
         <!-- post title -->
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="title"><strong>Title</strong></label>
             <input type="text" class="form-control" id="title" name='title'>
             <p id='title-error'></p>
@@ -29,7 +29,7 @@
         <!-- post categories -->
         <div class="form-group">
         <label for="cats"><strong>Categories</strong></label>
-        <select class="form-control" data-dropup-auto="false" id="cats" name='categories[]' multiple='multiple'></select>
+        <select class="form-control" data-dropup-auto="false" id="cats" name='categories[]'></select>
         <p id='cats-error'></p>
         </div>
 
@@ -41,15 +41,14 @@
         <div class="col-9"><input type="text" class="form-control" id="newTag" name='newTag' placeholder="e.g : php-storm or php7.x"></div>
         <div class="col-3"><button type="button" class="btn btn-success btn-small" id="addTag">Add</button></div>
         </div>
-        <p id='new-tag-error' class="mt-2"></p>
-        <p class="alert-container text-center px-5"></p>
+        <p id='new-tag-feedback' class="mt-2"></p>
         </div>
 
 
         <!-- post tags -->
         <div class="form-group">
         <label for="tags"><strong>Choose from existing Tags</strong></label>
-        <select class="form-control" data-dropup-auto="false" id="tags" name='tags[]' multiple='multiple'></select>
+        <select class="form-control" data-dropup-auto="false" id="tags" name='tags[]'></select>
         <p id='tags-error'></p>
         </div>
 
@@ -57,9 +56,44 @@
             <input class="form-check-input" type="checkbox" id="is_featured" name='is_featured'>
             <label class="form-check-label" for="is_featured"><strong>Make it featured</strong></label>
         </div>
-        <button type="submit" class="btn btn-primary" name='publish' value='Publish' id='submit'>Publish</button>
+        <button type="submit" class="btn btn-primary" name='publish' value='Publish' id='Publish'>Publish</button>
     </form>
 </div>
+@endsection
+
+
+
+@section('style')
+<style>
+.select2-selection--multiple:after{
+ content:"";
+ position:absolute;
+ right:10px;
+ top:15px;
+ width:0;
+ height:0;
+ border-left: 5px solid transparent;
+ border-right: 5px solid transparent;
+ border-top: 5px solid #888;
+ cursor: pointer;
+} 
+.select2-results__message
+{
+    color: red;
+}
+.select2-selection--multiple:after{
+ content:"";
+ position:absolute;
+ right:10px;
+ top:15px;
+ width:0;
+ height:0;
+ border-left: 5px solid transparent;
+ border-right: 5px solid transparent;
+ border-top: 5px solid #888;
+ cursor: pointer; 
+}
+</style>
 @endsection
 
 @section('script')
