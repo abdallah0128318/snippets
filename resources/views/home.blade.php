@@ -45,13 +45,26 @@
                             @endif
                         </span><img  src="{{ asset('images/featured.svg')}}" width="30px" height="30px"></i></p>
                         <h4 class="card-title" ><a data-toggle="tooltip" title="{{$featuredPost->title}}"  href="/post/{{$featuredPost->slug}}"><i>{{$featuredPost->title}}</i></a></h4>
-                        <a href="/post/{{$featuredPost->slug}}" class="show-more float-left">Show more</a>
-                        <form action="/post/{{$featuredPost->id}}" method='POST'>
-                            @CSRF 
-                            @method('DELETE')
-                            <button class="float-right pl-2 ml-2 btn btn-danger btn-sm px-3">Delete</button>
-                        </form>
-                        <a href="/edit/{{$featuredPost->id}}" class="pl-2 edit btn edit btn-sm px-3 float-right">Edit</a>
+                        <a href="/post/{{$featuredPost->slug}}" class="show-more float-left"><i>View Post</i></a>
+
+                        <!-- option button -->
+                    
+                        <i class="fa fa-ellipsis-v float-right d-block options-button"></i>
+
+                        <!-- options menu -->
+
+                        <ul  class="m-0 p-0 options">
+                            <li><a href="#" class="options-item"><i>share</i></a></li>
+                            <li><a href="/edit/{{$featuredPost->id}}" class="options-item"><i>edit</i></a></li>
+                            <li>
+                            <form action="/post/{{$featuredPost->id}}" method='POST'>
+                                @CSRF 
+                                @method('DELETE')
+                                <button class="options-item"><i>delete</i></button>
+                            </form>
+                            </li>
+                        </ul>
+
                     </div>
                 </div>
             </div>
@@ -88,14 +101,25 @@
                             @endif
                         </span></i></p>
                         <h4 class="card-title"><a data-toggle="tooltip" title="{{$post->title}}" href="/post/{{$post->slug}}"><i>{{$post->title}}</i></a></h4>
-                        <a href="/post/{{$post->slug}}" class="show-more float-left">Show more</a>
-                        <form action="/post/{{$post->id}}" method='POST'>
-                            @CSRF 
-                            @method('DELETE')
-                            <button class="float-right pl-2 ml-2 btn btn-danger btn-sm px-3">Delete</button>
-                        </form>
-                        
-                        <a href="/edit/{{$post->id}}" class="pl-2 btn btn-sm edit float-right px-3">Edit</a>
+                        <a href="/post/{{$post->slug}}" class="show-more float-left"><i>View Post</i></a>
+
+                       <!-- option button -->
+                    
+                       <i class="fa fa-ellipsis-v float-right d-block options-button"></i>
+
+                        <!-- options menu -->
+
+                        <ul class="m-0 p-0 options">
+                            <li><a href="#" class="options-item"><i>share</i></a></li>
+                            <li><a href="/edit/{{$post->id}}" class="options-item"><i>edit</i></a></li>
+                            <li>
+                            <form action="/post/{{$post->id}}" method='POST'>
+                                @CSRF 
+                                @method('DELETE')
+                                <button class="options-item"><i>delete</i></button>
+                            </form>
+                            </li>
+                        </ul>
 
                     </div>
                 </div>
@@ -123,28 +147,55 @@
     .card-img-top{
         height: 300px;
     }
-    .edit
-    {
-        background-color: #27285C;
-        color: white;
+    .card{
+        width: 100%;
     }
-    .edit:hover 
+    .fa-ellipsis-v
+    {
+        font-size:25px;
+        cursor: pointer;
+    }
+    .options
+    {
+        display: none;
+        position: absolute;
+        background-color: white;
+        width: 150px;
+        top: 70%;
+        right: 7%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 10px;
+    }
+    .options li 
+    {
+        list-style-type: none;
+        text-align: center;
+    }
+    .options  .options-item
+    {
+        display: block;
+        width: 100%;
+        padding: 0.25rem 1.5rem;
+        clear: both;
+        font-weight: 400;
+        color: #212529;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        text-decoration: none;
+    }
+    .options .options-item:hover
     {
         background-color: #27445C;
         color: white;
-    }
-    .card{
-        width: 100%;
+        border-radius: 10px;
     }
 
 </style>
 @endsection('style')
 
 @section('script')
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+<script src="{{asset('js/home.js')}}"></script>
 @endsection
 
