@@ -36,7 +36,7 @@
         <div class="form-group">
         <label for="cats"><strong>Categories</strong></label>
 
-        <select class="form-control" id="cats" name='categories[]' multiple>
+        <select class="form-control" id="cats" name='categories[]' multiple style="width: 100%">
             <!-- preselect post categories here -->
             @foreach($post->cats as $category)
             <option value="{{$category->id}}" selected>{{$category->cat_name}}</option>
@@ -63,7 +63,7 @@
         <div class="form-group">
         <label for="tags"><strong>Choose from existing Tags</strong></label>
 
-        <select class="form-control"  id="tags" name='tags[]' multiple>
+        <select class="form-control"  id="tags" name='tags[]' multiple style="width: 100%">
              <!-- preselect post categories here -->
             @foreach($post->tags as $tag)
             <option value="{{$tag->id}}" selected>{{$tag->tag_name}}</option>

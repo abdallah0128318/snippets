@@ -29,7 +29,7 @@
         <!-- post categories -->
         <div class="form-group">
         <label for="cats"><strong>Categories</strong></label>
-        <select class="form-control" data-dropup-auto="false" id="cats" name='categories[]'></select>
+        <select class="form-control" data-dropup-auto="false" id="cats" name='categories[]' style="width: 100%"></select>
         <p id='cats-error'></p>
         </div>
 
@@ -48,7 +48,7 @@
         <!-- post tags -->
         <div class="form-group">
         <label for="tags"><strong>Choose from existing Tags</strong></label>
-        <select class="form-control" data-dropup-auto="false" id="tags" name='tags[]'></select>
+        <select class="form-control" data-dropup-auto="false" id="tags" name='tags[]' style="width: 100%"></select>
         <p id='tags-error'></p>
         </div>
 
