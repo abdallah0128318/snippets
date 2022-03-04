@@ -60,7 +60,7 @@
                             <form action="/post/{{$featuredPost->id}}" method='POST'>
                                 @CSRF 
                                 @method('DELETE')
-                                <button class="options-item"><i>delete</i></button>
+                                <button class="options-item delete"><i>delete</i></button>
                             </form>
                             </li>
                         </ul>
@@ -116,7 +116,7 @@
                             <form action="/post/{{$post->id}}" method='POST'>
                                 @CSRF 
                                 @method('DELETE')
-                                <button class="options-item"><i>delete</i></button>
+                                <button class="options-item delete"><i>delete</i></button>
                             </form>
                             </li>
                         </ul>
@@ -132,6 +132,9 @@
 
 @section('style')
 <style>
+    *{
+        box-sizing: border-box;
+    }
     .card-title{
         height: 60px;
         overflow: hidden;
@@ -160,8 +163,8 @@
         display: none;
         position: absolute;
         background-color: white;
-        width: 150px;
-        top: 70%;
+        width: 170px;
+        top: 67%;
         right: 7%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         border-radius: 10px;
@@ -183,6 +186,7 @@
         white-space: nowrap;
         background-color: transparent;
         border: 0;
+        outline: none;
         text-decoration: none;
     }
     .options .options-item:hover

@@ -3,6 +3,11 @@ $(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
 
+    //************************************************/
+    //        options list dynamic styles           //
+    // **********************************************/
+
+
     // display options list when hovering the button
     $('.options-button').on('mouseenter', function(){
         var optionsList = $(this).siblings('.options');

@@ -10,6 +10,7 @@ use DOMDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -78,6 +79,29 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+
+        // delete post_image file from the server after deleting the post
+        $file = public_path('storage/postImages/' . $post->post_image);
+        if(File::exists($file))
+        {
+            File::delete($file);
+        }
+
+        // delete summernote`s content image files from the server when deleting the post
+        $dom = new DomDocument();
+        @$dom->loadHTML($post->post_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        if($images->length > 0)
+        {
+            foreach ($images as $key => $img) {
+                $src = $img->getAttribute('src');
+                $file = public_path($src);
+                if(File::exists($file))
+                {
+                    File::delete($file);
+                }
+            }
+        }
         $post->delete();
         return redirect('/home')->with('msg', 'Post deleted successfully');
     }
@@ -113,25 +137,29 @@ class PostController extends Controller
         $dom = new DomDocument();
         $dom->loadHTML($summernote, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName('img');
-        foreach ($images as $key => $img) {
-            $data = $img->getAttribute('src');
-            list($type, $data) = explode(';', $data);
-            list(, $data) = explode(',', $data);
-            $data = base64_decode($data);
-            list(, $type) = explode(':', $type);
-            list(, $type) = explode('/', $type); 
-            $image_name = "/storage/contentImages/" . time(). $key . '.' . $type;
-            $path = public_path() . $image_name;
-            if(!is_dir(public_path().'/storage/contentImages'))
-            {
-                mkdir(public_path().'/storage/contentImages');
+        if($images->length > 0)
+        {
+            foreach ($images as $key => $img) {
+                $data = $img->getAttribute('src');
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                list(, $type) = explode(':', $type);
+                list(, $type) = explode('/', $type); 
+                $image_name = "/storage/contentImages/" . time(). $key . '.' . $type;
+                $path = public_path() . $image_name;
+                if(!is_dir(public_path().'/storage/contentImages'))
+                {
+                    mkdir(public_path().'/storage/contentImages');
+                }
+                file_put_contents($path, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+    
             }
-            file_put_contents($path, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+            $summernote = $dom->saveHTML();
 
         }
-        $summernote = $dom->saveHTML();
         // create a post instance
         $post = new Post([
             'title' => $title,
