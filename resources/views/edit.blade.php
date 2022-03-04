@@ -19,6 +19,7 @@
             <textarea class="form-control" id="summernote" name='summernote'>
                 {!! $post->post_body !!}
             </textarea>
+            <p id="editor-error"></p>
         </div>
 
         <!-- post image -->
@@ -42,6 +43,7 @@
             @endforeach
         </select>
         <p id='cats-error'></p>
+        </div>
 
         <!-- Add post id as a hidden field to update the post as i am using separeted javaScript file -->
         <input type="hidden" name="id" value="{{$post->id}}">
@@ -67,6 +69,8 @@
             <option value="{{$tag->id}}" selected>{{$tag->tag_name}}</option>
             @endforeach
         </select>
+        <p id="tags-error"></p>
+        </div>
 
         <div class="form-check mb-4 mt-4">
 

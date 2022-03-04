@@ -36,6 +36,7 @@ Route::get('/autocomplete-tags', [App\Http\Controllers\PostController::class, 'a
 Route::get('/autocomplete-categories', [App\Http\Controllers\PostController::class, 'autoCompleteCategories']);
 Route::get('/post/{slug}', [App\Http\Controllers\PostController::class, 'showPost'])->middleware('auth');
 Route::get('/editPost/{id}', [App\Http\Controllers\PostController::class, 'edit'])->middleware('auth');
-Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy'])->middleware('auth');
+Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy']);
+Route::post('/updatePost', [App\Http\Controllers\PostController::class, 'update']);
 
 

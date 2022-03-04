@@ -71,7 +71,7 @@ $(function(){
         if(validPostImage()) postImageIsValid = true;
         if(minimumIsValid(1, $('#cats'), $('#cats-error'), '<strong>You have to select 1 category at least!</strong>')) 
         catsAreValid = true;
-        minimumIsValid(3, $('#tags'), $('#tags-error'), '<strong>You have to select 3 tag at least!</strong>')
+        if(minimumIsValid(3, $('#tags'), $('#tags-error'), '<strong>You have to select 3 tag at least!</strong>'))
         tagsAreValid = true;
 
         // send form data to the server if it is valid
@@ -211,32 +211,6 @@ $(function(){
             }
         });
     }
-
-
-    // A fucntion to send form data to the server using Ajax post request
-    function sendFormToServer(data) {
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $.ajax({
-            url: '/updatePost',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            processData: false,
-            contentType: false,
-            error: function(xhr) {
-                if(xhr.status === 200)
-                {
-                    location = '/home';
-                }
-                else if(xhr.status !== 200)
-                {
-                    errs = xhr.responseJSON.errors;
-                    displayErrors(errs); 
-                }
-            }
-        });
-    }
-
 
     // A fucntion to send the newTag to the server
     function sendNewTagToTheServer(newTag) {

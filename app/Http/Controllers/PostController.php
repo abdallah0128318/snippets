@@ -197,6 +197,84 @@ class PostController extends Controller
         $post = Post::with('tags')->with('cats')->find($id);
         return view('edit', ['post' => $post]);
     }
+
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:100|min:5',
+            'summernote' => 'required',
+            'postImage' => 'nullable|image|mimes:jpeg,png,jpg,svg',
+            'categories' => "required|array|min:1|max:3",
+            'categories.*' => "required|distinct|string",
+            'tags' => "required|array|min:3|max:10",
+            'tags.*' => "required|distinct|string",
+        ], [
+            'categories.required' => 'You have to select 1 category at least',
+        ]);
+
+        // pick the post from the request after validation
+        $title = $request->input('title');
+        $cats = $request->input('categories');
+        $tags = $request->input('tags');
+        $summernote = $request->input('summernote');
+        $is_featured = $request->input('is_featured') == 'on' ? 1 : 0;
+        // convert the source of the image nested to the post and decode it using base64_decode() 
+        // as summernote decode it using base64 algorithm
+        $dom = new DomDocument();
+        @$dom->loadHTML($summernote, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        if($images->length > 0)
+        {
+            foreach ($images as $key => $img) {
+
+                $pattern = "/^\/storage\/contentImages\/.+$/";
+                $data = $img->getAttribute('src');
+                if(!preg_match($pattern, $data))
+                {
+                    list($type, $data) = explode(';', $data);
+                    list(, $data) = explode(',', $data);
+                    $data = base64_decode($data);
+                    list(, $type) = explode(':', $type);
+                    list(, $type) = explode('/', $type); 
+                    $image_name = "/storage/contentImages/" . time(). $key . '.' . $type;
+                    $path = public_path() . $image_name;
+                    if(!is_dir(public_path().'/storage/contentImages'))
+                    {
+                        mkdir(public_path().'/storage/contentImages');
+                    }
+                    file_put_contents($path, $data);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $image_name);
+                }
+            }
+            $summernote = $dom->saveHTML();
+        }
+
+        $post = Post::find($request->input('id'));
+        $post->title = $title;
+        $post->post_body = $summernote;
+        $post->is_featured = $is_featured;
+        // handle the post if exists image path to store it in the posts table 
+        if($request->hasFile('postImage'))
+        {
+            $file = public_path('storage/postImages/' . $post->post_image);
+            if(File::exists($file))
+            {
+                File::delete($file);
+            }
+            $extension = $request->file('postImage')->getClientOriginalExtension();
+            $newImageName = time() . '.' . $extension;
+            $request->file('postImage')->storeAs('public/postImages', $newImageName);
+            $post->post_image = $newImageName;
+        }
+        $post->slug = null;
+        $post->save();
+        // update post related tags and categories
+        $post->tags()->sync($tags);
+        $post->cats()->sync($cats);
+
+    }
     
     public function showPost($slug)
     {
