@@ -55,7 +55,7 @@
 
                         <ul  class="m-0 p-0 options">
                             <li><a href="#" class="options-item"><i>share</i></a></li>
-                            <li><a href="/edit/{{$featuredPost->id}}" class="options-item"><i>edit</i></a></li>
+                            <li><a href="/editPost/{{$featuredPost->id}}" class="options-item"><i>edit</i></a></li>
                             <li>
                             <form action="/post/{{$featuredPost->id}}" method='POST'>
                                 @CSRF 
@@ -111,7 +111,7 @@
 
                         <ul class="m-0 p-0 options">
                             <li><a href="#" class="options-item"><i>share</i></a></li>
-                            <li><a href="/edit/{{$post->id}}" class="options-item"><i>edit</i></a></li>
+                            <li><a href="/editPost/{{$post->id}}" class="options-item"><i>edit</i></a></li>
                             <li>
                             <form action="/post/{{$post->id}}" method='POST'>
                                 @CSRF 

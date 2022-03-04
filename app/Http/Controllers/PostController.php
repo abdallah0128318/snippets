@@ -191,6 +191,12 @@ class PostController extends Controller
         return response()->json(['msg' => 'Tag added successfully search it in select box']);
 
     }
+
+    public function edit($id)
+    {
+        $post = Post::with('tags')->with('cats')->find($id);
+        return view('edit', ['post' => $post]);
+    }
     
     public function showPost($slug)
     {
