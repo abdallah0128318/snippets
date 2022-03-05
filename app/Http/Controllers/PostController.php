@@ -275,6 +275,18 @@ class PostController extends Controller
         $post->cats()->sync($cats);
 
     }
+
+
+    public function deleteImageOnDelete(Request $request)
+    {
+        // delete image file from the server after removing it from the editor
+        $file = public_path($request->input('src'));
+        if(File::exists($file))
+        {
+            File::delete($file);
+        }
+       return response()->json(['src' => $request->input('src')]);   
+    }
     
     public function showPost($slug)
     {

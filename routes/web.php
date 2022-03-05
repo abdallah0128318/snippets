@@ -38,5 +38,6 @@ Route::get('/post/{slug}', [App\Http\Controllers\PostController::class, 'showPos
 Route::get('/editPost/{id}', [App\Http\Controllers\PostController::class, 'edit'])->middleware('auth');
 Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy']);
 Route::post('/updatePost', [App\Http\Controllers\PostController::class, 'update']);
+Route::post('/deleteImage', [App\Http\Controllers\PostController::class, 'deleteImageOnDelete']);
 
 

@@ -1,7 +1,17 @@
 $(function(){
 
     // initialize summernote editor
-    $('#summernote').summernote({height:300});
+    $('#summernote').summernote({
+        height:300,
+        callbacks: {
+            onMediaDelete : function(target) {
+                sendToDelete($(target).attr('src'));
+            },
+        }
+    });
+
+
+    $()
 
     // initialize select2 plugin to render multiselect dropdown categories list instead the browser default select
     // Here I used autocomplete functionality that is provided by select2 jquery library with paginated results
@@ -92,6 +102,18 @@ $(function(){
     /*************************************************/
     /*************************************************/    
     /************************************************/
+
+
+
+    // a function to send summernote image src to the server to be deleted when a user remove it from the editor
+    function sendToDelete(imageSrc) {
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            method: 'POST',
+            url: '/deleteImage',
+            data: {src: imageSrc}
+        });
+    }
 
 
 
