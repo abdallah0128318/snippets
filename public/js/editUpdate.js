@@ -3,6 +3,7 @@ $(function(){
     // initialize summernote editor
     $('#summernote').summernote({
         height:300,
+        // Sending ajax request to delete image file from the server after removing it from the editor using bin icon
         callbacks: {
             onMediaDelete : function(target) {
                 sendToDelete($(target).attr('src'));

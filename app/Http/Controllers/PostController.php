@@ -279,7 +279,7 @@ class PostController extends Controller
 
     public function deleteImageOnDelete(Request $request)
     {
-        // delete image file from the server after removing it from the editor
+        // delete image file from the server after removing it from the editor using bin icon
         $file = public_path($request->input('src'));
         if(File::exists($file))
         {
