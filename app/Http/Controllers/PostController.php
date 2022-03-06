@@ -15,6 +15,17 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+    /* here i created two arraies one called beforeUpdate and another is afterUpdate 
+    // beforeUpdate stores pathes for images that will be rendered to the user in summernote to be updated 
+    // afterUpdate will store pathes of the posted images of summernote after updating then i will compare
+    // the old pathes with new pathes if an old path doesn`t exist in the new pathes array i will remove its 
+    // related image file from the server */
+
+    private $beforeUpdate = [];
+    private $afterUpdate = [];
+
+
+
     public function publish()
     {
         return view('publish');
@@ -219,6 +230,32 @@ class PostController extends Controller
         $tags = $request->input('tags');
         $summernote = $request->input('summernote');
         $is_featured = $request->input('is_featured') == 'on' ? 1 : 0;
+
+        // pick  the post to be updated 
+
+        $post = Post::find($request->input('id'));
+
+        // pick image files pathes to store them in $beforeUpdate array to compare with 
+        // new images to delete the user-deleted images from the server
+        $dom = new DomDocument();
+        @$dom->loadHTML($post->post_body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        if($images->length > 0)
+        {
+            foreach ($images as $key => $img) {
+                $src = $img->getAttribute('src');
+
+                /*************************************************************************************/
+                /************************************************************************************/
+
+                $this->beforeUpdate[] = $src;
+
+                /**************************************************************************************/
+                /**************************************************************************************/
+            }
+        }
+
+
         // convert the source of the image nested to the post and decode it using base64_decode() 
         // as summernote decode it using base64 algorithm
         $dom = new DomDocument();
@@ -247,15 +284,24 @@ class PostController extends Controller
                     $img->removeAttribute('src');
                     $img->setAttribute('src', $image_name);
                 }
+                else
+                {
+                    /*****************************************************************************************/
+                    /*****************************************************************************************/
+
+                    $this->afterUpdate[] = $data;
+
+                    /*****************************************************************************************/
+                    /*****************************************************************************************/
+                }
             }
             $summernote = $dom->saveHTML();
         }
-
-        $post = Post::find($request->input('id'));
         $post->title = $title;
+        $post->slug = null;
         $post->post_body = $summernote;
         $post->is_featured = $is_featured;
-        // handle the post if exists image path to store it in the posts table 
+        // handle the post_image if exists image path to store it in the posts table
         if($request->hasFile('postImage'))
         {
             $file = public_path('storage/postImages/' . $post->post_image);
@@ -268,14 +314,24 @@ class PostController extends Controller
             $request->file('postImage')->storeAs('public/postImages', $newImageName);
             $post->post_image = $newImageName;
         }
-        $post->slug = null;
+
+        // delete image files from the server if the user deleted it using Backspace or deleet button
+        foreach ($this->beforeUpdate as $path) {
+            if(!in_array($path, $this->afterUpdate))
+            {
+                $file = public_path($path);
+                if(File::exists($file))
+                {
+                    File::delete($file);
+                }
+            }
+        }
+        // Save the post 
         $post->save();
         // update post related tags and categories
         $post->tags()->sync($tags);
         $post->cats()->sync($cats);
-
     }
-
 
     public function deleteImageOnDelete(Request $request)
     {

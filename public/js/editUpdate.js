@@ -221,6 +221,9 @@ $(function(){
             data: data,
             processData: false,
             contentType: false,
+            success: (data)=>{
+                console.log(data);
+            },
             error: function(xhr) {
                 if(xhr.status === 200)
                 {
