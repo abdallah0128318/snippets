@@ -73,8 +73,8 @@ $(function(){
         if(validTitle()) titleIsValid = true;
         if(validSummernote()) summernoteIsValid = true;
         if(validPostImage()) postImageIsValid = true;
-        if(minimumIsValid(1, $('#cats'), $('#cats-error'), '<strong>You have to select 1 category at least!</strong>')) catsAreValid = true;
-        if(minimumIsValid(3, $('#tags'), $('#tags-error'), '<strong>You have to select 3 tag at least!</strong>')) tagsAreValid = true;
+        if(minimumIsValid(1, $('#cats'), $('#cats-error'), '<i class="validation">You have to select 1 category at least!</i>')) catsAreValid = true;
+        if(minimumIsValid(3, $('#tags'), $('#tags-error'), '<i class="validation">You have to select 3 tag at least!</i>')) tagsAreValid = true;
         if(titleIsValid && summernoteIsValid && postImageIsValid && catsAreValid && tagsAreValid)
         {
             var formData = new FormData($('#postForm')[0]);
@@ -115,7 +115,7 @@ $(function(){
         const postImageErrorContainer = $('#postImage-error');
         if(postImageInput.val() == '')
         {
-            setError(postImageErrorContainer, '<strong>Please choose an image</strong>');
+            setError(postImageErrorContainer, '<i class="validation">Please choose an image!</i>');
             return false;
         }
         else 
@@ -124,7 +124,7 @@ $(function(){
             var extPattern = /^(png|PNG|jpg|JPG|jpeg|JPEG|svg|SVG|bmp|BMP)$/;
             if(!extension.match(extPattern))
             {
-                setError(postImageErrorContainer, '<strong>image format have to be jpg,png,jpeg,svg,bmp</strong>');
+                setError(postImageErrorContainer, '<i class="validation">image format have to be jpg,png,jpeg,svg,bmp</i>');
                 return false;
             }
             else 
@@ -155,10 +155,7 @@ $(function(){
         const titleErrorContainer = $('#title-error');
         if(!pattern.test(title.val()))
         {
-            setError(titleErrorContainer, '<strong>Please, enter a valid post title<br>\
-            lowercase and uppercase characters<br>\
-            symbols like . $ - % # ?<br>\
-            Enter at least 5 characters and at most 100 characters</strong>');
+            setError(titleErrorContainer, '<i class="validation">Title has to be 5 to 100 letter!</i>');
             return false;
         }
         else if(pattern.test(title.val()))
@@ -173,7 +170,7 @@ $(function(){
         const editorErrorContainer = $('#editor-error');
         const isEmptyEditor = $('#summernote').summernote('isEmpty');
         if (isEmptyEditor) {
-            setError(editorErrorContainer, '<strong>Post Can`t be blank!</strong>');
+            setError(editorErrorContainer, '<i class="validation">Post Can`t be blank!</i>');
             return false;
         }
         else if(!isEmptyEditor)
@@ -235,7 +232,7 @@ $(function(){
                 if(xhr.status !== 200)
                 {
                     errs = xhr.responseJSON.errors;
-                    $('#new-tag-feedback').addClass('text-danger').html('<strong>' + errs.tag[0] + '</strong>');
+                    $('#new-tag-feedback').addClass('text-danger').html('<i class="validation">' + errs.tag[0] + '</i>');
                 }
             }
         });

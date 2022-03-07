@@ -192,14 +192,12 @@ class PostController extends Controller
             'tag' => 'regex:/^[a-z.0-9-]{1,20}$/|unique:tags,tag_name'
         ], [
             'tag.unique' => 'This tag is already existing just select it!', 
-             'tag.regex' => 'Please, enter a valid tag<br>
-             Tag should only contain lowercase letters, digits and dot character<br>
-             Enter at least 1 character and at most 15 characters!'
+             'tag.regex' => 'Tag has to be 1 to 15 letter'
             ]);
         $tag = new Tag(['tag_name' => $request->input('tag')]);
         $tag->save();
 
-        return response()->json(['msg' => 'Tag added successfully search it in select box']);
+        return response()->json(['msg' => 'Tag added successfully search it in select box!']);
 
     }
 

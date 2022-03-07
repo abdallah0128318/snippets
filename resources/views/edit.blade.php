@@ -105,6 +105,10 @@
  border-top: 5px solid #888;
  cursor: pointer; 
 }
+i.validation 
+{
+    color: red;
+}
 </style>
 @endsection
 
