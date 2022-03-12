@@ -22,7 +22,7 @@ $(function(){
                     page: params.page || 1
                 };
             },
-            url: '/autocomplete-categories',
+            url: route('paginated.categories'),
             dataType: 'json',
             Cache: true
         }
@@ -45,7 +45,7 @@ $(function(){
                     page: params.page || 1
                 };
             },
-            url: '/autocomplete-tags',
+            url: route('paginated.tags'),
             dataType: 'json',
             Cache: true
         }
@@ -185,7 +185,7 @@ $(function(){
     function sendFormToServer(data) {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            url: '/store',
+            url: route('store.post'),
             dataType: 'json',
             type: 'POST',
             data: data,
@@ -194,7 +194,7 @@ $(function(){
             error: function(xhr) {
                 if(xhr.status === 200)
                 {
-                    location = '/home';
+                    location = route('home');
                 }
                 else if(xhr.status !== 200)
                 {
@@ -219,7 +219,7 @@ $(function(){
     function sendNewTagToTheServer(newTag) {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            url: '/store-tag',
+            url: route('store.new.tag'),
             dataType: 'json',
             method: 'post',
             data: {tag: newTag},

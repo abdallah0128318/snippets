@@ -92,6 +92,7 @@
         <main class="py-4">
             @yield('content')
             @yield('style')
+            @routes
             @yield('script')
         </main>
     </div>

@@ -30,14 +30,14 @@ Auth::routes(['verify' => true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/publish', [App\Http\Controllers\PostController::class, 'publish'])->name('publish')->middleware(['auth']);
-Route::post('/store', [App\Http\Controllers\PostController::class, 'store']);
-Route::post('/store-tag', [App\Http\Controllers\PostController::class, 'storeNewTag']);
-Route::get('/autocomplete-tags', [App\Http\Controllers\PostController::class, 'autoCompleteTags']);
-Route::get('/autocomplete-categories', [App\Http\Controllers\PostController::class, 'autoCompleteCategories']);
-Route::get('/post/{slug}', [App\Http\Controllers\PostController::class, 'showPost'])->middleware('auth');
-Route::get('/editPost/{id}', [App\Http\Controllers\PostController::class, 'edit'])->middleware('auth');
-Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy']);
-Route::post('/updatePost', [App\Http\Controllers\PostController::class, 'update']);
-Route::post('/deleteImage', [App\Http\Controllers\PostController::class, 'deleteImageOnDelete']);
+Route::post('/store', [App\Http\Controllers\PostController::class, 'store'])->name('store.post');
+Route::post('/store-tag', [App\Http\Controllers\PostController::class, 'storeNewTag'])->name('store.new.tag');
+Route::get('/autocomplete-tags', [App\Http\Controllers\PostController::class, 'autoCompleteTags'])->name('paginated.tags');
+Route::get('/autocomplete-categories', [App\Http\Controllers\PostController::class, 'autoCompleteCategories'])->name('paginated.categories');
+Route::get('/post/{slug}', [App\Http\Controllers\PostController::class, 'showPost'])->middleware('auth')->name('view.post');
+Route::get('/editPost/{id}', [App\Http\Controllers\PostController::class, 'edit'])->middleware('auth')->name('edit.post');
+Route::delete('/post/{id}', [App\Http\Controllers\PostController::class, 'destroy'])->name('delete.post');
+Route::post('/updatePost', [App\Http\Controllers\PostController::class, 'update'])->name('update.post');
+Route::post('/deleteImage', [App\Http\Controllers\PostController::class, 'deleteImageOnDelete'])->name('del.img.from.server');
 
 

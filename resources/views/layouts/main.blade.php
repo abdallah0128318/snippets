@@ -95,6 +95,7 @@
         <main class="">
             @yield('content')
             @yield('style')
+            @routes
             @yield('script')
         </main>
 

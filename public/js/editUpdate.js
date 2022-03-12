@@ -11,9 +11,6 @@ $(function(){
         }
     });
 
-
-    $()
-
     // initialize select2 plugin to render multiselect dropdown categories list instead the browser default select
     // Here I used autocomplete functionality that is provided by select2 jquery library with paginated results
     $('#cats').select2({
@@ -22,7 +19,7 @@ $(function(){
         maximumSelectionLength:3,
         minimumInputLength:1,
         ajax: {
-            url: '/autocomplete-categories',
+            url: route('paginated.categories'),
             dataType: 'json',
             Cache: true,
             delay: 250,
@@ -43,7 +40,7 @@ $(function(){
         maximumSelectionLength:10,
         minimumInputLength:1,
         ajax: {
-            url: '/autocomplete-tags',
+            url: route('paginated.tags'),
             dataType: 'json',
             Cache: true,
             delay: 250,
@@ -106,12 +103,13 @@ $(function(){
 
 
 
-    // a function to send summernote image src to the server to be deleted when a user remove it from the editor
+    // a function to send summernote image src to the server to be deleted when a user remove it using bin icon from the editor 
+    // "using bin icon not Backspace or delete button on the keyboard"
     function sendToDelete(imageSrc) {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             method: 'POST',
-            url: '/deleteImage',
+            url: route('del.img.from.server'),
             data: {src: imageSrc}
         });
     }
@@ -212,7 +210,7 @@ $(function(){
     function sendFormToServer(data) {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            url: '/updatePost',
+            url: route('update.post'),
             dataType: 'json',
             type: 'POST',
             data: data,
@@ -224,7 +222,7 @@ $(function(){
             error: function(xhr) {
                 if(xhr.status === 200)
                 {
-                    location = '/home';
+                    location = route('home');
                 }
                 else if(xhr.status !== 200)
                 {
@@ -239,7 +237,7 @@ $(function(){
     function sendNewTagToTheServer(newTag) {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            url: '/store-tag',
+            url: route('store.new.tag'),
             dataType: 'json',
             method: 'post',
             data: {tag: newTag},
