@@ -192,7 +192,7 @@ class PostController extends Controller
             'tag' => 'regex:/^[a-z.0-9-]{1,20}$/|unique:tags,tag_name'
         ], [
             'tag.unique' => 'This tag is already existing just select it!', 
-             'tag.regex' => 'Tag has to be 1 to 15 letter'
+             'tag.regex' => 'Tag has to be 1 to 20 lowercase letter'
             ]);
         $tag = new Tag(['tag_name' => $request->input('tag')]);
         $tag->save();

@@ -1,12 +1,32 @@
 @extends('layouts.main')
 @section('content')
+
+<!-- bootstrap4 modal to be displayed with deletion message after deleting a post -->
+<div class="container">
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content d-flex justify-content-center align-items-center">
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- bootstrap4 modal to be displayed with deletion message after deleting a post -->
+
 <div class="container-fluid mt-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
             @if (session('msg'))
-                <div class="alert alert-success" role="alert">
-                    <h6 class="text-center">{{ session('msg') }}</h6>
-                </div>
+            <script>
+                // display deletion message after deletion and redirecting to the home page
+                var msg = "{{ session('msg') }}";
+                $('.modal-title').html('<i>' + msg + '</i>');
+                $('.modal').modal();
+            </script>
             @endif
         </div>
     </div>
