@@ -64,8 +64,8 @@
                             </script>
                             @endif
                         </span><img  src="{{ asset('images/featured.svg')}}" width="30px" height="30px"></i></p>
-                        <h4 class="card-title" ><a data-toggle="tooltip" title="{{$featuredPost->title}}"  href="/post/{{$featuredPost->slug}}"><i>{{$featuredPost->title}}</i></a></h4>
-                        <a href="/post/{{$featuredPost->slug}}" class="show-more float-left"><i>View Post</i></a>
+                        <h4 class="card-title" ><a data-toggle="tooltip" title="{{$featuredPost->title}}"  href="{{ route('view.post', $featuredPost->slug) }}"><i>{{$featuredPost->title}}</i></a></h4>
+                        <a href="{{ route('view.post', $featuredPost->slug) }}" class="show-more float-left"><i>View Post</i></a>
 
                         <!-- option button -->
                     
@@ -75,9 +75,9 @@
 
                         <ul  class="m-0 p-0 options">
                             <li><a href="#" class="options-item"><i>share</i></a></li>
-                            <li><a href="/editPost/{{$featuredPost->id}}" class="options-item"><i>edit</i></a></li>
+                            <li><a href="{{ route('edit.post', $featuredPost->id) }}" class="options-item"><i>edit</i></a></li>
                             <li>
-                            <form action="/post/{{$featuredPost->id}}" method='POST'>
+                            <form action="{{ route( 'delete.post' , $featuredPost->id) }}" method='POST'>
                                 @CSRF 
                                 @method('DELETE')
                                 <button class="options-item delete"><i>delete</i></button>
@@ -120,8 +120,8 @@
                             </script>
                             @endif
                         </span></i></p>
-                        <h4 class="card-title"><a data-toggle="tooltip" title="{{$post->title}}" href="/post/{{$post->slug}}"><i>{{$post->title}}</i></a></h4>
-                        <a href="/post/{{$post->slug}}" class="show-more float-left"><i>View Post</i></a>
+                        <h4 class="card-title"><a data-toggle="tooltip" title="{{$post->title}}" href="{{ route('view.post', $post->slug) }}"><i>{{$post->title}}</i></a></h4>
+                        <a href="{{ route('view.post', $post->slug) }}" class="show-more float-left"><i>View Post</i></a>
 
                        <!-- option button -->
                     
@@ -131,9 +131,9 @@
 
                         <ul class="m-0 p-0 options">
                             <li><a href="#" class="options-item"><i>share</i></a></li>
-                            <li><a href="/editPost/{{$post->id}}" class="options-item"><i>edit</i></a></li>
+                            <li><a href="{{route( 'edit.post' , $post->id)}}" class="options-item"><i>edit</i></a></li>
                             <li>
-                            <form action="/post/{{$post->id}}" method='POST'>
+                            <form action="{{route( 'delete.post' , $post->id)}}" method='POST'>
                                 @CSRF 
                                 @method('DELETE')
                                 <button class="options-item delete"><i>delete</i></button>
