@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container p-4">
+<div class="container p-4 rounded" id="publishContainer">
     <div class='text-center' id='errors'></div>
     <form method='POST' action="" id='postForm'>
         @CSRF
@@ -65,6 +65,10 @@
 
 @section('style')
 <style>
+#publishContainer
+{
+    background-color:skyblue;
+}
 .select2-selection--multiple:after{
  content:"";
  position:absolute;
