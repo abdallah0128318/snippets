@@ -1,0 +1,121 @@
+body
+{
+    background-color: #f4f4f4;
+}
+.post-container
+{
+    width: 80%;
+    margin: 50px auto;
+    justify-content:space-between;
+}
+.content
+{
+    width: 90%;
+    height: 200px;
+    background-color: #fff;
+    height: auto;
+    padding: 0px;
+    margin: 0 auto;
+}
+#post-title
+{
+    padding: 20px 10px 5px 10px;
+    font-size: 28px;
+    line-height: 1.4;
+    font-weight: 700;
+    text-align: center;
+}
+#timestamp
+{
+    text-align: center;
+}
+#options{
+    margin:0 0 10px 0;
+    padding: 0;
+    text-align: center;
+}
+#options li 
+{
+    list-style-type: none;
+    display: inline-block;
+}
+#options li button 
+{
+    background-color: #0000;
+    border:none;
+    outline: none;
+    color: #007bff;
+}
+#options li button:hover
+{
+    color: blue;
+    text-decoration: underline;
+}
+#post-body
+{
+    padding: 20px;
+    font-family: sans-serif;
+}
+#post-image-container
+{
+    padding: 20px;
+}
+#post-body img, #post-image-container img
+{
+    width: 100% !important;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#post-title img{
+    vertical-align: top;
+}
+#trash
+{
+    font-size: 25px;
+    color: red;
+}
+#edit
+{
+    font-size: 28px;
+    color: #000;
+}
+#facebook-icon
+{
+    font-size: 26px;
+    color: blue;
+}
+#whatsapp-logo
+{
+    font-size: 26px;
+    color: rgb(0, 255, 115);
+}
+#twitter-logo
+{
+    font-size: 26px;
+    color:#007bff
+}
+#linked-logo
+{
+    font-size: 25px;
+    color: blue;
+}
+#delete form button 
+{
+    padding: 0;
+    margin: 0;
+}
+#post-tags
+{
+    margin: 10px 20px;
+    text-align: center;
+}
+#post-tags a 
+{
+    display: inline-block;
+    text-decoration: none;
+    background-color: grey;
+    color: #fff;
+    padding: 5px;
+    margin-bottom: 4px;
+    border-radius: 5px;
+}

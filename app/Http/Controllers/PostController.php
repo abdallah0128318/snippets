@@ -344,7 +344,7 @@ class PostController extends Controller
     
     public function showPost($slug)
     {
-        $post = Post::select('title', 'post_body', 'created_at')->where('slug', $slug)->get();
+        $post = Post::select('title', 'post_body', 'created_at', 'updated_at', 'id', 'post_image', 'is_featured')->where('slug', $slug)->with('tags')->with('cats')->get();
         return view('show', ['post' => $post]);
     }
 
