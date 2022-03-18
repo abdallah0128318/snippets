@@ -39,12 +39,12 @@
 
         <!-- disply edit delet options to the user -->
         <ul id="options">
-            <li><a href="#"><ion-icon name="logo-facebook" id="facebook-icon"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-twitter" id="twitter-logo"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-linkedin" id="linked-logo"></ion-icon></a></li>
-            <li><a href="#"><ion-icon name="logo-whatsapp" id="whatsapp-logo"></ion-icon></a></li>
-            <li id="edit"><a href="{{ route('edit.post', $post[0]->id) }}"><ion-icon name="create" id="edit"></ion-icon></a></li>
-            <li id="delete">
+            <li title="share via facebook" data-toggle="tooltip"><a href="#"><ion-icon name="logo-facebook" id="facebook-icon"></ion-icon></a></li>
+            <li title="share via twitter" data-toggle="tooltip"><a href="#"><ion-icon name="logo-twitter" id="twitter-logo"></ion-icon></a></li>
+            <li title="share via linkedin" data-toggle="tooltip"><a href="#"><ion-icon name="logo-linkedin" id="linked-logo"></ion-icon></a></li>
+            <li title="share via whatsapp" data-toggle="tooltip"><a href="#"><ion-icon name="logo-whatsapp" id="whatsapp-logo"></ion-icon></a></li>
+            <li title="edit post" data-toggle="tooltip"><a href="{{ route('edit.post', $post[0]->id) }}"><ion-icon name="create" id="edit"></ion-icon></a></li>
+            <li id="delete" title="delete post" data-toggle="tooltip">
                 <form action="{{ route( 'delete.post' , $post[0]->id) }}" method='POST'>
                     @CSRF 
                     @method('DELETE')
@@ -88,4 +88,13 @@
 
 @section('style')
 <link rel="stylesheet" href="{{asset('css/show.css')}}">
+@endsection
+
+@section('script')
+<script>
+$(function(){
+    // initialize tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 @endsection

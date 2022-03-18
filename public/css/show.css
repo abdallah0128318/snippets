@@ -72,6 +72,9 @@ body
 #post-title img{
     vertical-align: top;
 }
+ion-icon {
+    pointer-events: none;
+}
 #trash
 {
     font-size: 25px;

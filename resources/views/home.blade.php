@@ -151,72 +151,7 @@
 
 
 @section('style')
-<style>
-    *{
-        box-sizing: border-box;
-    }
-    .card-title{
-        height: 60px;
-        overflow: hidden;
-    } 
-    .card-title a 
-    {
-        color:#27285C;
-    }
-    .show-more
-    {
-        color: #27445C;
-    }
-    .card-img-top{
-        height: 300px;
-    }
-    .card{
-        width: 100%;
-    }
-    .fa-ellipsis-v
-    {
-        font-size:25px;
-        cursor: pointer;
-    }
-    .options
-    {
-        display: none;
-        position: absolute;
-        background-color: white;
-        width: 170px;
-        top: 67%;
-        right: 7%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        border-radius: 10px;
-    }
-    .options li 
-    {
-        list-style-type: none;
-        text-align: center;
-    }
-    .options  .options-item
-    {
-        display: block;
-        width: 100%;
-        padding: 0.25rem 1.5rem;
-        clear: both;
-        font-weight: 400;
-        color: #212529;
-        text-align: inherit;
-        white-space: nowrap;
-        background-color: transparent;
-        border: 0;
-        outline: none;
-        text-decoration: none;
-    }
-    .options .options-item:hover
-    {
-        background-color: #27445C;
-        color: white;
-        border-radius: 10px;
-    }
-
-</style>
+<link rel="stylesheet" href="{{asset('css/home.css')}}">
 @endsection('style')
 
 @section('script')
