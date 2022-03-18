@@ -57,7 +57,7 @@
         <!-- display post tags and make them clickable -->
         <div id="post-tags">
             @foreach($post[0]->tags as $tag)
-                <a href="">{{$tag->tag_name}}</a>
+                <a href="" class="shadow">{{$tag->tag_name}}</a>
             @endforeach
         </div>
 
@@ -69,6 +69,15 @@
         <!-- display post body -->
         <div id="post-body">
             {!! $post[0]->post_body !!}
+        </div>
+
+        <div id="post-categories">
+            <span>This post categorized as: </span>
+            <div>
+                @foreach($post[0]->cats as $category)
+                <a href="#">{{$category->cat_name}}</a>
+                @endforeach
+            </div>
         </div>
 
     </div>

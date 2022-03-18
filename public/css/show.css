@@ -6,7 +6,6 @@ body
 {
     width: 80%;
     margin: 50px auto;
-    justify-content:space-between;
 }
 .content
 {
@@ -53,8 +52,12 @@ body
 }
 #post-body
 {
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
     font-family: sans-serif;
+}
+#post-body p span br
+{
+    display: none;
 }
 #post-image-container
 {
@@ -106,16 +109,96 @@ body
 }
 #post-tags
 {
-    margin: 10px 20px;
+    margin: 30px 20px 5px 20px;
     text-align: center;
 }
 #post-tags a 
 {
     display: inline-block;
     text-decoration: none;
-    background-color: grey;
-    color: #fff;
+    color: #000;
     padding: 5px;
     margin-bottom: 4px;
     border-radius: 5px;
 }
+#post-tags a:hover
+{
+    background-color: orangered;
+    color: #fff;
+}
+#post-categories
+{
+    padding: 20px;
+}
+#post-categories div 
+{
+    margin-top: 15px;
+}
+#post-categories div a 
+{
+    background: darkslateblue;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+#post-categories div a:hover 
+{
+    background: rgb(23, 122, 214);
+}
+
+/* media queries to make post layout responsive */
+
+
+/* medium devices */
+@media screen and (max-width: 992px){
+    .post-container
+    {
+        width: 90%;
+    }
+    .content
+    {
+        width: 100%;
+    }
+}
+
+/* small devices */
+@media screen and (max-width: 768px) {
+    .post-container
+    {
+        width: 100%;
+    }
+    .content
+    {
+        width: 100%;
+    }
+}
+
+/* Extra small devices */
+@media screen and (max-width: 576px) {
+    .post-container
+    {
+        width: 100%;
+    }
+    .content
+    {
+        width: 100%;
+    }
+    #post-categories span
+    {
+        text-align: center;
+    }
+    #post-categories div a 
+    {
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    #post-categories div a:nth-of-type(1)
+    {
+        margin-top: 15px;
+    }
+
+}
+
+
