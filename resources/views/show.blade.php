@@ -48,7 +48,7 @@
                 <form action="{{ route( 'delete.post' , $post[0]->id) }}" method='POST'>
                     @CSRF 
                     @method('DELETE')
-                    <button><ion-icon name="trash" id="trash"></ion-icon><button>
+                    <button id="deletePost"><ion-icon name="trash" id="trash"></ion-icon><button>
                 </form>
             </li>
         </ul>
@@ -95,6 +95,16 @@
 $(function(){
     // initialize tooltip
     $('[data-toggle="tooltip"]').tooltip();
+
+    /* allow user to confirm post deletion */
+
+    $(document).on('click', '#deletePost', function(e){
+        e.preventDefault();
+        if(confirm('Really want to delete the post ?!'))
+        {
+            $(this).parent().submit();
+        }
+    });
 });
 </script>
 @endsection

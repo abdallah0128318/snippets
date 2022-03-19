@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container p-4 shadow rounded">
+<div class="container p-4 shadow rounded bg-white">
     <div class='text-center' id='errors'></div>
 
     <form method='POST' action="" id='editForm'>
@@ -89,6 +89,10 @@
 
 @section('style')
 <style>
+body 
+{
+    background-color: #f4f4f4;
+}
 .select2-results__message
 {
     color: red;

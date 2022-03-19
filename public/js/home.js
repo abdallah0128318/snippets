@@ -28,6 +28,18 @@ $(function(){
             optionsList.hide();
         }
     });
+
+
+
+    /* allow user to confirm post deletion */
+
+    $(document).on('click', '.delete', function(e){
+        e.preventDefault();
+        if(confirm('Really want to delete the post ?!'))
+        {
+            $(this).parent().submit();
+        }
+    });
     
 
 
