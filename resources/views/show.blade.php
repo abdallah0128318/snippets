@@ -6,7 +6,7 @@
 
         <!-- display post title -->
         <h1 id="post-title">
-            {{$post[0]->title}}
+            {{ $post[0]->title }}
             <!-- display star SVG image if the post is featured -->
             @if($post[0]->is_featured == 1)
             <img  src="{{ asset('images/featured.svg')}}" alt="start icon for featured posts">

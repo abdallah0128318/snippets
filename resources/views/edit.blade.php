@@ -9,7 +9,7 @@
         <!-- post title -->
         <div class="form-group">
             <label for="title"><strong>Title</strong></label>
-            <input type="text" class="form-control" id="title" name='title' value="{{$post->title}}">
+            <input type="text" class="form-control" id="title" name='title' value="{{ $post->title }}">
             <p id='title-error'></p>
         </div>
 
@@ -17,7 +17,7 @@
         <div class="form-group">
             <label for="summernote"><strong>Summernote</strong></label>
             <textarea class="form-control" id="summernote" name='summernote'>
-                {!! $post->post_body !!}
+                {{ clean($post->post_body) }}
             </textarea>
             <p id="editor-error"></p>
         </div>
